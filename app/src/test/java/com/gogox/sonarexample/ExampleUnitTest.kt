@@ -19,4 +19,9 @@ class ExampleUnitTest {
     fun divide_isCorrect() {
         assertEquals(1, 4 / 2)
     }
+
+    @Test
+    fun minus_isCorrect() {
+        assertEquals(2, 4 - 2)
+    }
 }
