@@ -15,8 +15,12 @@ workflows:
     artifacts:
       - app/build/outputs/bundle/**/*.aab
     scripts:
+      - name: App test
+        script: ./gradlew testReleaseUnitTest
+      - name: App lint
+        script: ./gradlew lintReportRelease
       - name: Sonar Analyze
-        script: ./gradlew sonarqube
+        script: ./gradlew sonar
       - name: Build Android app
         script: ./gradlew assembleRelease
         #script: |
