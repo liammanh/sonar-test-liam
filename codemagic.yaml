@@ -14,7 +14,10 @@ workflows:
     artifacts:
       - app/build/outputs/bundle/**/*.aab
     scripts:
+      - name: Sonar Analyze
+        script: ./gradlew sonarqube
+
       - name: Build Android app
         script: ./gradlew assembleRelease
         #script: |
-          #bash gradlew ":app:assembleRelease"
+        #bash gradlew ":app:assembleRelease"
