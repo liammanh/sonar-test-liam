@@ -17,6 +17,9 @@ workflows:
     scripts:
       #- name: App test
       #  script: ./gradlew testDebugUnitTest
+      - name: Run unit tests
+        script: ./gradlew testDebugUnitTest
+        test_report: app/build/**/*.xml
       - name : App test report
         script: ./gradlew jacocoTestReport
       - name: App lint
