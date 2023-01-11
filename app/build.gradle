@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id "org.sonarqube" version "3.5.0.2730"
+    id 'jacoco'
 }
 
 sonarqube {
@@ -9,12 +10,21 @@ sonarqube {
         property "sonar.projectKey", "liammanh_sonar-test-liam"
         property "sonar.organization", "liammanh"
         property "sonar.host.url", "https://sonarcloud.io"
+
         property "sonar.android.lint.reportPaths", "build/reports/lint-results-debug.xml"
+        property "sonar.junit.reportPaths", "build/test-results/testDebugUnitTest"
+        property 'sonar.core.codeCoveragePlugin', 'jacoco'
+        property 'sonar.coverage.jacoco.xmlReportPaths', "${project.buildDir}/reports/jacoco.xml"
+
         property "sonar.sources", "src/main/java,src/main/res"
         property "sonar.tests", "src/test/java,src/androidTest/java"
+
     }
 }
 
+jacoco {
+    toolVersion = "0.8.8"
+}
 
 android {
     compileSdk 32
@@ -33,6 +43,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            testCoverageEnabled false
+        }
+        debug {
+            testCoverageEnabled true
         }
     }
     compileOptions {
@@ -45,7 +59,52 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            unitTests.returnDefaultValues = true
+        }
+    }
+
+    task jacocoTestReport(type: JacocoReport,
+            dependsOn: ['testDebugUnitTest',
+                        'createDebugCoverageReport']) {
+        group = "Reporting"
+        description = "Generate Jacoco coverage reports after running tests."
+
+        reports {
+            xml.required.set(true)
+            html.required.set(true)
+            html.destination file("${buildDir}/reports/coverage")
+            xml.destination file("${buildDir}/reports/jacoco.xml")
+        }
+
+        def fileFilter = ['androidx/**/*.*',
+                          '**/view/*.*',
+                          '**/data/*.*',
+                          '**/data/model/*.*',
+                          '**/generated/callback/*.*',
+                          '**/lambda$*.class',
+                          '**/lambda.class',
+                          '**/*lambda.class',
+                          '**/*lambda*.class']
+
+        def debugTree = fileTree(dir:
+                "${buildDir}/intermediates/javac/debug/classes",
+                excludes: fileFilter
+        )
+
+        def mainSrc = "/src/main/java"
+
+        sourceDirectories.from files([mainSrc])
+        classDirectories.from files([debugTree])
+        executionData.from fileTree(dir: "${buildDir}", includes: [
+                "/jacoco/testDebugUnitTest.exec"])
+    }
+
 }
+
 
 dependencies {
 
