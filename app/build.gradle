@@ -15,7 +15,7 @@ sonarqube {
         property "sonar.junit.reportPaths", "${project.buildDir}/test-results/testDebugUnitTest/"
         property "onar.jacoco.reportPaths", "${project.buildDir}/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec"
         property 'sonar.core.codeCoveragePlugin', 'jacoco'
-        /*property 'sonar.coverage.jacoco.xmlReportPaths', "${project.buildDir}/reports/jacoco/"*/
+        property 'sonar.coverage.jacoco.xmlReportPaths', "${project.buildDir}/reports/jacocoTestReport/jacocoTestReport.xml"
 
         property "sonar.sources", "src/main/java,src/main/res"
         property "sonar.tests", "src/test/java" //src/androidTest/java
@@ -62,9 +62,11 @@ android {
             includeAndroidResources = true
             unitTests.returnDefaultValues = true
         }
+        unitTests.all {
+            useJUnitPlatform()
+        }
     }
 }
-
 
 task jacocoTestReport(type: JacocoReport,
         dependsOn: ["testDebugUnitTest",
@@ -73,10 +75,8 @@ task jacocoTestReport(type: JacocoReport,
     description = "Generate Jacoco coverage reports after running tests."
 
     reports {
-        xml.required.set(true)
-        html.required.set(false)
-        html.destination file("${buildDir}/reports/coverage")
-        xml.destination file("${buildDir}/reports/jacoco/jacoco.xml")
+        xml.required = true
+        csv.required = false
     }
 
     def fileFilter = ['android/**/*.*',
@@ -97,9 +97,9 @@ task jacocoTestReport(type: JacocoReport,
     )
     def mainSrc = "${project.projectDir}/src/main/java"
 
-    sourceDirectories.from files([mainSrc])
-    classDirectories.from files([debugTree])
-    executionData.from fileTree(dir: "${buildDir}", includes: [
+    sourceDirectories.from = files([mainSrc])
+    classDirectories.from = files([debugTree])
+    executionData.from = fileTree(dir: "${project.buildDir}", includes: [
             "outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec",
             "outputs/code_coverage/debugAndroidTest/connected/*/coverage.ec"
     ])
@@ -135,7 +135,9 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
+
     testImplementation 'junit:junit:4.13.2'
+    testImplementation 'io.kotlintest:kotlintest-runner-junit5:3.3.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 }
