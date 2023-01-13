@@ -33,8 +33,6 @@ W
 '.idea/modules/app/Sonar_Example.app.iml,3/7/374080a603d7bb8ddc1b888a609408a681e34fba
 z
 Japp/src/androidTest/java/com/gogox/sonarexample/ExampleInstrumentedTest.kt,c/4/c42c332f79342f2880409f39ca12f015184d4778
-F
-.sonarcloud.properties,8/c/8c2ee9288b17817bf601b83cde380a0086a67745
 i
 9app/src/main/java/com/gogox/sonarexample/FirstFragment.kt,3/a/3a539d296932d2d3c76e61a5014f1c25be8eaa84
 P
