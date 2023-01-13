@@ -22,7 +22,8 @@ workflows:
 #        test_report: app/build/test-results/testDebugUnitTest/*.xml
 #        ignore_failure: true
       - name : App test report
-        script: ./gradlew jacocoTestReport
+        script: ./gradlew jacocoTestCoverageVerification
+        test_report: app/build/test-results/testDebugUnitTest/*.xml
         ignore_failure: false
       - name: App lint
         script: ./gradlew lintReportDebug
