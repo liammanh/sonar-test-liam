@@ -37,3 +37,7 @@ F
 .sonarcloud.properties,8/c/8c2ee9288b17817bf601b83cde380a0086a67745
 i
 9app/src/main/java/com/gogox/sonarexample/FirstFragment.kt,3/a/3a539d296932d2d3c76e61a5014f1c25be8eaa84
+P
+ app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
+M
+app/.kotlintest/spec_failures,6/1/612f2d66260bbd071dde43f2f96d78c012ed2248

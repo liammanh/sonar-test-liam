@@ -17,18 +17,17 @@ workflows:
     scripts:
       #- name: App test
       #  script: ./gradlew testDebugUnitTest
-      - name: Run unit tests
-        script: ./gradlew testDebugUnitTest
-        test_report: app/build/test-results/testDebugUnitTest/*.xml
-        ignore_failure: true
+#      - name: Run unit tests
+#        script: ./gradlew testDebugUnitTest
+#        test_report: app/build/test-results/testDebugUnitTest/*.xml
+#        ignore_failure: true
       - name : App test report
         script: ./gradlew jacocoTestReport
-        ignore_failure: true
+        ignore_failure: false
       - name: App lint
         script: ./gradlew lintReportDebug
       - name: Sonar Analyze
         script: ./gradlew sonar
       - name: Build Android app
         script: ./gradlew assembleRelease
-        #script: |
         #bash gradlew ":app:assembleRelease"

@@ -1,8 +1,7 @@
 package com.gogox.sonarexample
 
-import org.junit.Test
-
-import org.junit.Assert.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -17,7 +16,7 @@ class ExampleUnitTest {
 
     @Test
     fun divide_isCorrect() {
-        assertEquals(1, 4 / 2)
+        assertEquals(2, 4 / 2)
     }
 
     @Test
