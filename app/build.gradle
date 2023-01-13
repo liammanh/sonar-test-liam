@@ -4,41 +4,46 @@ plugins {
     id "org.sonarqube" version "3.5.0.2730"
     id 'jacoco'
 }
-
 sonarqube {
     properties {
         property "sonar.projectKey", "liammanh_sonar-test-liam"
         property "sonar.organization", "liammanh"
         property "sonar.host.url", "https://sonarcloud.io"
         property "sonar.projectName", "Sonar Example"
-        property "sonar.projectVersion", "$project.version"
+        property "sonar.projectVersion", "$version_Code"
 
         property "sonar.language", "kotlin"
         property "sonar.binaries", "build/kotlin"
         property "sonar.dynamicAnalysis", "reuseReports"
-
-        property "sonar.android.lint.reportPaths", "build/reports/lint-results-debug.xml"
-        property "sonar.junit.reportPaths", "build/test-results/testDebugUnitTest/"
-        property "onar.jacoco.reportPaths", "build/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec"
+        property "sonar.exclusions", '**/*Test*/**,' +
+                'build/**' +
+                '*.json,' +
+                '**/*test*/**,' +
+                '**/.gradle/**,' +
+                '**/R.class'
+        property "sonar.android.lint.reportPaths", "**/reports/lint-*.xml"
+        property "sonar.junit.reportPaths", "**/test-results/**/*.xml"
         property 'sonar.core.codeCoveragePlugin', 'jacoco'
-        property 'sonar.coverage.jacoco.xmlReportPaths', "build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml"
+        property "sonar.coverage.jacoco.xmlReportPaths", "**/jacocoTestReport/jacocoTestReport.xml"
 
         property "sonar.sources", "src/main/java,src/main/res"
         property "sonar.tests", "src/test/java, src/androidTest/java"
+        property "sonar.test.inclusions", "**/*Test*/**"
 
     }
 }
 
+def version_Code = 1
+def version_Name = "1.0.1"
 
 android {
     compileSdk 32
-
     defaultConfig {
         applicationId "com.gogox.sonarexample"
         minSdk 21
         targetSdk 32
-        versionCode 1
-        versionName "1.0"
+        versionCode version_Code
+        versionName version_Name
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -112,7 +117,7 @@ task jacocoTestReport(type: JacocoReport,
         ]) {//'createDebugCoverageReport' -- run android test
     group = "Reporting"
     description = "Generate Jacoco coverage reports after running tests."
-
+    System.out.println("Project Version: $version_Code");
     reports {
         xml.required = true
         html.required = false
@@ -164,9 +169,9 @@ task jacocoTestCoverageVerification(type: JacocoCoverageVerification, dependsOn:
             }
         }
     }
-
-    project.tasks["sonar"].dependsOn "jacocoTestCoverageVerification"
 }
+
+project.tasks["sonar"].dependsOn "jacocoTestCoverageVerification"
 
 
 dependencies {
