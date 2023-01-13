@@ -23,4 +23,9 @@ class ExampleUnitTest {
     fun minus_isCorrect() {
         assertEquals(2, 4 - 2)
     }
+
+    @Test
+    fun multiple_isCorrect() {
+        assertEquals(8, 4 * 2)
+    }
 }
