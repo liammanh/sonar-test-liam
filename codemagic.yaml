@@ -21,14 +21,16 @@ workflows:
 #        script: ./gradlew testDebugUnitTest
 #        test_report: app/build/test-results/testDebugUnitTest/*.xml
 #        ignore_failure: true
-      - name : App test report
-        script: ./gradlew jacocoTestCoverageVerification
-        test_report: app/build/test-results/testDebugUnitTest/*.xml
-        ignore_failure: false
-      - name: App lint
-        script: ./gradlew lintReportDebug
+#      - name : App test report
+#        script: ./gradlew jacocoTestCoverageVerification
+#        test_report: app/build/test-results/testDebugUnitTest/*.xml
+#        ignore_failure: false
+#      - name: App lint
+#        script: ./gradlew lintReportDebug
       - name: Sonar Analyze
         script: ./gradlew sonar
+        test_report: app/build/test-results/testDebugUnitTest/*.xml
+        ignore_failure: false
       - name: Build Android app
         script: ./gradlew assembleRelease
         #bash gradlew ":app:assembleRelease"

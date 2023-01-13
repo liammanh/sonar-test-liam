@@ -11,7 +11,7 @@ sonarqube {
         property "sonar.organization", "liammanh"
         property "sonar.host.url", "https://sonarcloud.io"
         property "sonar.projectName", "Sonar Example"
-        property "sonar.projectVersion", "1.0.0"
+        property "sonar.projectVersion", "$project.version"
 
         property "sonar.language", "kotlin"
         property "sonar.binaries", "build/kotlin"
@@ -108,7 +108,7 @@ jacoco {
 }
 
 task jacocoTestReport(type: JacocoReport,
-        dependsOn: ["testDebugUnitTest",
+        dependsOn: ["testDebugUnitTest", "lintReportDebug",
         ]) {//'createDebugCoverageReport' -- run android test
     group = "Reporting"
     description = "Generate Jacoco coverage reports after running tests."
@@ -164,6 +164,8 @@ task jacocoTestCoverageVerification(type: JacocoCoverageVerification, dependsOn:
             }
         }
     }
+
+    project.tasks["sonar"].dependsOn "jacocoTestCoverageVerification"
 }
 
 
