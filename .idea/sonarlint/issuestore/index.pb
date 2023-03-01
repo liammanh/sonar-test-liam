@@ -39,3 +39,9 @@ P
  app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
 M
 app/.kotlintest/spec_failures,6/1/612f2d66260bbd071dde43f2f96d78c012ed2248
+k
+;app/src/test/java/com/gogox/sonarexample/ExampleUnitTest.kt,1/6/16262ffbb5474d46c116015d6979833d7065998e
+>
+codemagic.yaml,d/2/d248c34e6972504e2a7867fe7fe2b44695a3f923
+<
+build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
